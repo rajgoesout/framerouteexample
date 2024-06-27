@@ -64,7 +64,8 @@ export async function generateMetadata({ params }: { params: { frameid: string }
             src: data?.img,
             aspectRatio: '1:1',
         },
-        postUrl: `${NEXT_PUBLIC_URL}/frame/${data?.id}/actions/click`,
+        // postUrl: `${NEXT_PUBLIC_URL}/frame/${data?.id}/actions/click`,
+        postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
     });
     return {
         title: `${data?.id} - ${data?.advertiser}`,
