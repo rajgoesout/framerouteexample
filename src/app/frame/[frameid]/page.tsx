@@ -1,6 +1,6 @@
 // app/frame/[frameid]/page.tsx
 import { Metadata } from 'next';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { getFrameMetadata } from '@coinbase/onchainkit/frame';
 
 // Define the props type
@@ -14,46 +14,28 @@ interface FramePageProps {
 
 import { NEXT_PUBLIC_URL } from '../../config';
 
-// const frameMetadata = getFrameMetadata({
-//     buttons: [
-//         {
-//             action: 'link',
-//             label: 'Link to Google',
-//             target: 'https://www.google.com',
-//         },
-//         {
-//             label: 'Story time',
-//         },
-//         {
-//             action: 'tx',
-//             label: 'Send Base Sepolia',
-//             target: `${NEXT_PUBLIC_URL}/api/tx`,
-//             postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
-//         },
-//     ],
-//     image: {
-//         // src: `${NEXT_PUBLIC_URL}/park-3.png`,
-//         src: `https://sample-videos.com/img/Sample-png-image-5mb.png`,
-//         aspectRatio: '1:1',
-//     },
-//     input: {
-//         text: 'Tell me a story',
-//     },
-//     postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
-// });
 
 // Fetch data function
 async function fetchFrameData(frameid: string) {
-    // const res = await fetch(`https://api.example.com/frames/${frameid}`);
+    // const res = await fetch(`https://adbaseapi/frames/${frameid}`);
     // if (!res.ok) {
     //     throw new Error('Failed to fetch data');
     // }
-    // const data = await res.json();
-    const data = {
+    // const resp = await res.json();
+
+    // assume this is coming from our adbase-api (created by advertiser)
+    const resp = {
+        // advertiser: "pudgy pengu tees",
+        advertiser: "base cats",
+        id: frameid,
+        // img: "https://sothebys-md.brightspotcdn.com/dims4/default/cae787c/2147483647/strip/true/crop/2000x2000+0+0/resize/1024x1024!/quality/90/?url=http%3A%2F%2Fsothebys-brightspot.s3.amazonaws.com%2Fmedia-desk%2F56%2Fe8%2Fe34be74e4180a974f016b2de17f3%2F80741.png",
+        // url: "https://shop.pudgypenguins.com/products/custom-pudgy-penguins-tee-2",
+        img: "https://cdn.mint.fun/5ede3c3212ff3e6d023aa6ac6144a72ac96693849c1d142f45ddd81835a23761?format=auto",
+        url: "https://mint.fun/base/0xdDdC17AFA03afc66e4178ff1B36E5b2237303a21",
         title: "hello",
         description: "this si reall",
     }
-    return data;
+    return resp;
 }
 
 // Generate metadata function
@@ -64,34 +46,31 @@ export async function generateMetadata({ params }: { params: { frameid: string }
         buttons: [
             {
                 action: 'link',
-                label: 'Link to Google',
-                target: 'https://www.google.com',
+                label: 'Shop now',
+                target: data?.url,
             },
-            {
-                label: params.frameid,
-            },
+            // {
+            //     label: data?.id,
+            // },
             {
                 action: 'tx',
-                label: 'Send Base Sepolia',
+                label: 'Buy',
+                // target: data?.url,
                 target: `${NEXT_PUBLIC_URL}/api/tx`,
                 postUrl: `${NEXT_PUBLIC_URL}/api/tx-success`,
             },
         ],
         image: {
-            // src: `${NEXT_PUBLIC_URL}/park-3.png`,
-            src: `https://sample-videos.com/img/Sample-png-image-5mb.png`,
+            src: data?.img,
             aspectRatio: '1:1',
         },
-        input: {
-            text: 'Tell me a story',
-        },
-        postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
+        postUrl: `${NEXT_PUBLIC_URL}/frame/${data?.id}/actions/click`,
     });
     return {
-        title: `${data.title} - MyApp`,
+        title: `${data?.id} - ${data?.advertiser}`,
         description: data.description,
         openGraph: {
-            title: data.title,
+            title: `${data?.id} - ${data?.advertiser}`,
             description: data.description,
         },
         other: {
