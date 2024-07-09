@@ -52,12 +52,12 @@ export async function generateMetadata({ params }: { params: { frameid: string }
                 label: 'Shop now',
                 target: data?.url,
             },
-            {
-                action: 'link',
-                label: 'Add Current Time Action',
-                target:
-                    'https://warpcast.com/~/add-cast-action?actionType=post&name=Current+Time&icon=clock&postUrl=https%3A%2F%2Fadframeview.vercel.app%2Fapi%2Faction',
-            },
+            // {
+            //     action: 'link',
+            //     label: 'Add Current Time Action',
+            //     target:
+            //         'https://warpcast.com/~/add-cast-action?actionType=post&name=Current+Time&icon=clock&postUrl=https%3A%2F%2Fadframeview.vercel.app%2Fapi%2Faction',
+            // },
             // {
             //     label: data?.id,
             // },
